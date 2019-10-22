@@ -1,0 +1,61 @@
+#include <iostream>
+
+using namespace std;
+
+void citire(int n,int a[10][10],int i,int j)
+{
+    if(i<n)
+    {
+        if(j<n)
+        {  cin>>a[i][j];
+            citire(n,a,i,j+1);
+        }
+        else
+            citire(n,a,i+1,0);
+    }
+}
+
+void calculeaza(int &s, int a[10][10], int n, int i, int j)
+{
+    if(i<n)
+    {
+        if(j<i)
+        {
+            if(a[i][j]%2==0)
+                s+=a[i][j];
+            calculeaza(s,a,n,i,j+1);
+        }
+        else
+            calculeaza(s,a,n,i+1,0);
+    }
+}
+
+void afisare(int n, int a[10][10], int i, int j)
+{
+    if(i<n)
+    {
+        if(j<n)
+        {
+            cout<<a[i][j]<<' ';
+            afisare(n,a,i,j+1);
+        }
+        else
+        {   cout<<endl;
+            afisare(n,a,i+1,0);
+
+        }
+    }
+}
+
+int main()
+{
+  int n,a[10][10],s=0;
+   cout<<"n=";cin>>n;
+   cout<<"introduceti matricea:\n";
+    citire(n,a,0,0);
+    cout<<"matricea introdusa este:\n";
+    afisare(n,a,0,0);
+    calculeaza(s,a,n,1,0);
+    cout<<"s="<<s;
+    return 0;
+}
