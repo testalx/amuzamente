@@ -1,0 +1,271 @@
+#include<iostream>
+#include<fstream>
+#include<time.h>
+
+
+using namespace std;
+
+char s[20], cuv[20], alese[26], litera, raspuns, tipjoc;
+int nrvieti, nrcuvinte;
+//tipjoc=3 - nu se afiseaza nicio litera la inceput
+//tipjoc=2 - se afiseaza prima si ultima
+//tipjoc=1 - se afiseaza si eventualele alte aparitii pt prima si ultima litera.
+void refresh();
+void joc();
+
+
+
+void initializare()
+{
+	nrvieti = 7, nrcuvinte = 6;
+	//se genereaza un nr aleator intre 1 si nrcuvinte.
+	//apoi se extrage din fisier doar cuv cu nr de ordine respectiv.
+	srand((unsigned)time(NULL));
+	int nr = rand() % nrcuvinte + 1;
+	//    cout<<nr<<endl;
+	//    getch();
+	ifstream f("cuvinte.txt");
+	//strcpy(alese,"");
+	//strcpy(s,"");
+	for (int i = 0; i < 26; i++)
+		alese[i] = '\0';
+	for (int i = 0; i < 20; i++)
+		s[i] = '\0';
+	//strcpy(cuv,"");
+	while (!f.eof() && nr > 0)
+	{
+		f >> cuv;
+		nr--;
+	}
+	f.close();
+	//sirul s va fi format pe baza lui cuv, cu literele inlocuite cu _ in functie de dificultate
+
+	for (int i = 0; i < strlen(cuv); i++)
+		s[strlen(s)] = '_';
+	//cout<<cuv<<endl<<s;getch();
+	if (tipjoc == '2')
+	{
+		s[0] = cuv[0];
+		//alese[strlen(alese)]=cuv[0];
+		s[strlen(s) - 1] = cuv[strlen(s) - 1];
+		// alese[strlen(alese)]=cuv[strlen(s)-1];
+	}
+	if (tipjoc == '1')
+	{
+		for (int i = 0; i < strlen(s); i++)
+		{
+			if (cuv[i] == cuv[0])
+				s[i] = cuv[0];
+			if (cuv[i] == cuv[strlen(cuv) - 1])
+				s[i] = cuv[strlen(cuv) - 1];
+		}
+		alese[strlen(alese)] = cuv[0];
+		alese[strlen(alese)] = cuv[strlen(s) - 1];
+	}
+
+}
+
+void victorie()
+{
+	system("cls");
+	system("color b5");
+	cout << "                                  .\'\'." << endl;
+	cout << "        .\'\'.             *\'\'*    :_\\/_:     . " << endl;
+	cout << "       :_\\/_:   .    .:.*_\\/_*   : /\\ :  .\'.:.\'." << endl;
+	cout << "   .\'\'.: /\\ : _\\(/_  \':\'* /\\ *  : \'..\'.  -=:o:=-" << endl;
+	cout << "  :_\\/_:\'.:::. /)\\*\'\'*  .|.* \'.\\\'/.\'_\\(/_\'.\':\'.\'" << endl;
+	cout << "  : /\\ : :::::  \'*_\\/_* | |  -= o =- /)\\    \'  *" << endl;
+	cout << "   \'..\'  \':::\'   * /\\ * |\'|  .\'/.\\\'.  \'._____" << endl;
+	cout << "       *        __*..* |  |     :      |.   |\' .---\"|" << endl;
+	cout << "        _*   .-\'   \'-. |  |     .--\'|  ||   | _|    |" << endl;
+	cout << "     .-\'|  _.|  |    ||   \'-__  |   |  |    ||      |" << endl;
+	cout << "     |\' | |.    |    ||       | |   |  |    ||      |" << endl;
+	cout << "  ___|  \'-\'     \'    \"\"       \'-\'   \'-.\'    \'`      |____" << endl;
+	cout << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	cout << "Mai jucati? \n D/N\n";
+	do {
+		cin >> raspuns;
+
+	} while (raspuns != 'd' && raspuns != 'n' && raspuns != 'D' && raspuns != 'N');
+	if (raspuns == 'd' || raspuns == 'D')
+		joc();
+	else cout << "Pe curand!";
+}
+
+void esec()
+{
+	system("cls");
+	system("color a0");
+
+	cout << "                 uuuuuuu" << endl;
+	cout << "             uu$$$$$$$$$$$uu" << endl;
+	cout << "          uu$$$$$$$$$$$$$$$$$uu" << endl;
+	cout << "         u$$$$$$$$$$$$$$$$$$$$$u" << endl;
+	cout << "        u$$$$$$$$$$$$$$$$$$$$$$$u" << endl;
+	cout << "       u$$$$$$$$$$$$$$$$$$$$$$$$$u" << endl;
+	cout << "       u$$$$$$$$$$$$$$$$$$$$$$$$$u" << endl;
+	cout << "       u$$$$$$\"   \"$$$\"   \"$$$$$$u" << endl;
+	cout << "       \"$$$$\"      u$u       $$$$\"" << endl;
+	cout << "        $$$u       u$u       u$$$" << endl;
+	cout << "        $$$u      u$$$u      u$$$" << endl;
+	cout << "         \"$$$$uu$$$   $$$uu$$$$\"" << endl;
+	cout << "          \"$$$$$$$\"   \"$$$$$$$\"" << endl;
+	cout << "            u$$$$$$$u$$$$$$$u" << endl;
+	cout << "             u$\"$\"$\"$\"$\"$\"$u" << endl;
+	cout << "  uuu        $$u$ $ $ $ $u$$       uuu" << endl;
+	cout << " u$$$$        $$$$$u$u$u$$$       u$$$$" << endl;
+	cout << "  $$$$$uu      \"$$$$$$$$$\"     uu$$$$$$" << endl;
+	cout << "u$$$$$$$$$$$uu    \"\"\"\"\"    uuuu$$$$$$$$$$" << endl;
+	cout << "$$$$\"\"\"$$$$$$$$$$uuu   uu$$$$$$$$$\"\"\"$$$\"" << endl;
+	cout << " \"\"\"      \"\"$$$$$$$$$$$uu \"\"$\"\"\"" << endl;
+	cout << "           uuuu \"\"$$$$$$$$$$uuu" << endl;
+	cout << "  u$$$uuu$$$$$$$$$uu \"\"$$$$$$$$$$$uuu$$$" << endl;
+	cout << "  $$$$$$$$$$\"\"\"\"           \"\"$$$$$$$$$$$\"" << endl;
+	cout << "   \"$$$$$\"                      \"\"$$$$\"\"" << endl;
+	cout << "     $$$\"     TRY AGAIN           $$$$\"" << endl;
+
+	cout << "Mai jucati? \n D/N\n";
+	do {
+		cin >> raspuns;
+
+	} while (raspuns != 'd' && raspuns != 'n' && raspuns != 'D' && raspuns != 'N');
+	if (raspuns == 'd' || raspuns == 'D')
+		joc();
+	else cout << "Pe curand!";
+}
+
+void cauta(char c)
+{
+	int ok = 0;
+	for (int i = 0; i < strlen(cuv); i++)
+		if (cuv[i] == c)
+		{
+			s[i] = c;
+			ok = 1;
+		}
+	if (ok == 0)
+		nrvieti--;
+	if (strcmp(s, cuv) == 0)
+		victorie();
+	else
+		if (nrvieti == 0)
+			esec();
+		else
+			refresh();
+}
+
+
+void refresh()
+{
+	int ok = 1;
+	system("cls");
+	system("color e5");
+	cout << "-----------------------------------" << endl;
+	if (tipjoc == '1' || tipjoc == '2')
+		cout << "SPANZURATOAREA 1.0 - DIFICULTATEA " << tipjoc << endl;
+	else
+		cout << "SPANZURATOAREA 1.0 - DIFICULTATEA 3" << endl;
+	cout << "-----------------------------------" << endl;
+	// cout<<"Litere alese pana in momentul de fata: "<<alese<<endl<<endl;
+	cout << "Jocul a inceput. Mult succes!" << endl << endl;
+	for (int i = 0; i < strlen(s); i++)
+		cout << s[i] << ' ';
+	cout << " (" << strlen(cuv) << " litere)\n";
+	if (strlen(alese))
+		cout << "\nLitere alese pana in momentul de fata: " << alese << endl << endl;
+	else cout << "\nAlegeti prima litera" << endl;
+	if (nrvieti == 1)
+		cout << "ATENTIE! Ultima viata!\n";
+	else
+		cout << "Mai aveti " << nrvieti << " vieti\n\n";
+
+	cout << "Introduceti o litera:";
+	//trebuie verificat cumva daca litera pe care o introduce utiliz a mai fost aleasa. daca da, repetam citirea
+	//de asemenea trebuie prevazut cazul in care utiliz NU A INTRODUS O LITERA
+	do {
+		ok = 1;
+		cin >> litera;
+		if (litera >= 'a' && litera <= 'z')
+			litera -= 32;
+		if (strchr(alese, litera))
+			ok = 0;
+		if (litera<'A' || litera>'Z' && litera<'a' || litera>'z')
+			ok = 0;
+		if (ok == 0)
+			cout << "caracterul " << litera << " a mai fost ales sau nu e litera. Incercati din nou\n";
+	} while (ok == 0);
+
+
+	alese[strlen(alese)] = litera;
+	//cout<<alese<<endl;
+	cauta(litera);
+
+}
+
+void joc()
+{
+	system("cls");
+	system("color f4");
+	cout << "    Spanzuratoarea 1.0 - proiect scolar\n";
+	//la inceput utiliz alege tipul de joc. afisam un mesaj in care se descriu tipurile si se citeste valoarea var tipjoc (1,2,sau 3)
+
+
+	cout << "  ___________.._______" << endl;
+	cout << "| .__________))______|" << endl;
+	cout << "| | / /      ||" << endl;
+	cout << "| |/ /       ||" << endl;
+	cout << "| | /        ||.-\'\'." << endl;
+	cout << "| |/         |/  _  \\" << endl;
+	cout << "| |          ||  `/,|" << endl;
+	cout << "| |          (\\\\`_.\'" << endl;
+	cout << "| |         .-`--\'." << endl;
+	cout << "| |        /Y . . Y\\" << endl;
+	cout << "| |       // |   | \\\\" << endl;
+	cout << "| |      //  | . |  \\\\" << endl;
+	cout << "| |     \')   |   |   (`" << endl;
+	cout << "| |          ||\'||" << endl;
+	cout << "| |          || ||" << endl;
+	cout << "| |          || ||" << endl;
+	cout << "| |          || ||" << endl;
+	cout << "| |         / | | \\" << endl;
+	cout << "\"\"\"\"\"\"\"\"\"\"|_`-\' `-\' |\"\"\"|\\" << endl;
+	cout << "|\"|\"\"\"\"\"\"\"\\ \\       \'\"|\"|\\" << endl;
+	cout << "| |        \\ \\        | |" << endl;
+	cout << ": :         \\ \\       : :  " << endl;
+	cout << ". .          `\'       . ." << endl;
+
+	cout << "Alegeti dificultatea jocului:" << endl;
+	cout << "1.Usor: vor fi afisate prima si ultima litera, precum si toate celelalte eventuale aparitii ale lor" << endl;
+	cout << "2.Mediu: se vor afisa doar prima si ultima litera" << endl;
+	cout << "3.Dificil: nu se va afisa nicio litera de la inceput[implicit-orice valoare diferita de 1 si 2]" << endl;
+	do
+	{
+		cin >> tipjoc;
+		if (tipjoc<'1' || tipjoc>'3')
+			cout << "Dificultatea trebuie sa fie intre 1 si 3";
+	} while (tipjoc<'1' || tipjoc>'3');
+
+	if (tipjoc == '2')
+		nrvieti = 6;
+	if (tipjoc == '1')
+		nrvieti = 5;
+	// strcpy(s,cuv);
+	initializare();
+	refresh();
+}
+
+int main()
+{
+	/*  pentru versiunea 1.2
+		 clock_t startTime = clock(); //Start timer
+		 double secondsPassed;
+		 cout<<startTime;
+		 getch();
+		secondsPassed = (clock() - startTime) / CLOCKS_PER_SEC;
+		cout<<"au trecut "<<secondsPassed<<" secunde\n";
+		getch();
+		*/
+	joc();
+
+	return 0;
+}
